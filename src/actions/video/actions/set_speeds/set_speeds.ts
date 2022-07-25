@@ -17,7 +17,7 @@
 import { getVideos, setSpeeds as setSpeedsUtil } from '../../util/utils';
 import { Context } from '../../context';
 import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';
-import { createAction } from '../../../shared';
+import { createManualAction } from '../../../shared';
 
 export function setSpeeds(context: Context, speed: number) {
   const videos = getVideos();
@@ -26,7 +26,7 @@ export function setSpeeds(context: Context, speed: number) {
 
 export function getActions(context: Context) {
   return {
-    setSpeed1: createAction({
+    setSpeed1: createManualAction({
       label: '1️⃣',
       tooltip: 'Set speed to 1',
       tabFcn: async () => {
@@ -34,7 +34,7 @@ export function getActions(context: Context) {
       },
       filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
     }),
-    setSpeed3: createAction({
+    setSpeed3: createManualAction({
       label: '3️⃣',
       tooltip: 'Set speed to 3',
       tabFcn: async () => {
@@ -42,7 +42,7 @@ export function getActions(context: Context) {
       },
       filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
     }),
-    setSpeed4: createAction({
+    setSpeed4: createManualAction({
       label: '4️⃣',
       tooltip: 'Set speed to 4',
       tabFcn: async () => {

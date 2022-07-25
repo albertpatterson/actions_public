@@ -1,8 +1,9 @@
-import { Action, AutoAction } from './types';
+import { ManualAction, AutoAction } from './types';
 
-export function createAction(
-  part: Pick<Action, 'label' | 'tooltip' | 'tabFcn'> & Partial<Action>
-): Action {
+export function createManualAction(
+  part: Pick<ManualAction, 'label' | 'tooltip' | 'tabFcn'> &
+    Partial<ManualAction>
+): ManualAction {
   return {
     filter: () => true,
     handleResult: async () => null,

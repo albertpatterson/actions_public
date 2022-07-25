@@ -16,9 +16,9 @@
 
 import { getVideos, setSpeeds } from '../../util/utils';
 import { Context } from '../../context';
-import { Action } from '../../../types';
+import { ManualAction } from '../../../types';
 import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';
-import { createAction } from '../../../shared';
+import { createManualAction } from '../../../shared';
 
 export function speedUp(context: Context) {
   const videos = getVideos();
@@ -26,8 +26,8 @@ export function speedUp(context: Context) {
   setSpeeds(context, speed, videos);
 }
 
-export function getAction(context: Context): Action {
-  return createAction({
+export function getAction(context: Context): ManualAction {
+  return createManualAction({
     label: '⏫',
     tooltip: 'Increase speed by 0.5',
     tabFcn: async () => {

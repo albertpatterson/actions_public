@@ -17,9 +17,9 @@
 import { skip as utilSkip } from '../../util/utils';
 
 import { Context } from '../../context';
-import { Action } from '../../../types';
+import { ManualAction } from '../../../types';
 import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';
-import { createAction } from '../../../shared';
+import { createManualAction } from '../../../shared';
 
 export function skip(context: Context) {
   if (context.hasVidSkipInterval()) {
@@ -29,8 +29,8 @@ export function skip(context: Context) {
   }
 }
 
-export function getAction(context: Context): Action {
-  return createAction({
+export function getAction(context: Context): ManualAction {
+  return createManualAction({
     label: '⏭',
     tooltip: 'Skip by 10s',
     tabFcn: async () => {

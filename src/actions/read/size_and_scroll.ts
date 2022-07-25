@@ -1,9 +1,9 @@
-import { Action } from '../types';
+import { ManualAction } from '../types';
 
 import { TabDetails } from '../../messaging/message_systems/get_active_tab_details/types';
-import { createAction } from '../shared';
+import { createManualAction } from '../shared';
 
-export const action: Action = createAction({
+export const action: ManualAction = createManualAction({
   label: '🔽',
   tooltip: 'Register listerns for easy reading by scrolling',
   tabFcn: async () => {

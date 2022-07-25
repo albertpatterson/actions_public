@@ -16,11 +16,11 @@
 
 import { decrementTime } from '../../util/utils';
 import { context } from '../../context';
-import { Action } from '../../../types';
+import { ManualAction } from '../../../types';
 import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';
-import { createAction } from '../../../shared';
+import { createManualAction } from '../../../shared';
 
-export const action: Action = createAction({
+export const action: ManualAction = createManualAction({
   label: '⬅️',
   tooltip: 'Go back 10s',
   tabFcn: async () => {

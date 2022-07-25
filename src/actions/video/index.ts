@@ -1,5 +1,5 @@
 import { TabDetails } from '../../messaging/message_systems/get_active_tab_details/types';
-import { ActionSet } from '../types';
+import { ManualActionSet } from '../types';
 import { action as videoGoBackAction } from './actions/go_back/go_back';
 import { action as videoGoForwardAction } from './actions/go_forward/go_forward';
 import { getActions as getVideoSetSpeedsActions } from './actions/set_speeds/set_speeds';
@@ -10,7 +10,7 @@ import { getAction as getVideoSkipAction } from './actions/skip/skip';
 
 const videoSetSpeedActions = getVideoSetSpeedsActions(context);
 
-export const actionSet: ActionSet = {
+export const actionSet: ManualActionSet = {
   videoGoBack: videoGoBackAction,
   videoGoForward: videoGoForwardAction,
   videoSkip: getVideoSkipAction(context),

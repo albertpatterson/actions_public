@@ -1,10 +1,10 @@
 import { TabDetails } from '../messaging/message_systems/get_active_tab_details/types';
-import { ActionSet, AutoActionSet } from './types';
+import { ManualActionSet, AutoActionSet } from './types';
 import { actionSet as videoActionSet } from './video';
 import { readActionSet } from './read';
 import { youtubeAutoActionSet } from './youtube';
 
-export const fullActionSet: ActionSet = {
+const fullManualActionSet: ManualActionSet = {
   ...videoActionSet,
   ...readActionSet,
 };
@@ -13,7 +13,7 @@ const fullAutoActionSet: AutoActionSet = {
   ...youtubeAutoActionSet,
 };
 
-function getAnyActionSet<T extends ActionSet | AutoActionSet>(
+function getActionSet<T extends ManualActionSet | AutoActionSet>(
   fullActionSet: T,
   tabDetails: TabDetails
 ): T {
@@ -28,10 +28,10 @@ function getAnyActionSet<T extends ActionSet | AutoActionSet>(
   return tabActions;
 }
 
-export function getActionSet(tabDetails: TabDetails): ActionSet {
-  return getAnyActionSet(fullActionSet, tabDetails);
+export function getManualActionSet(tabDetails: TabDetails): ManualActionSet {
+  return getActionSet(fullManualActionSet, tabDetails);
 }
 
 export function getAutoActionSet(tabDetails: TabDetails): AutoActionSet {
-  return getAnyActionSet(fullAutoActionSet, tabDetails);
+  return getActionSet(fullAutoActionSet, tabDetails);
 }

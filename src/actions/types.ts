@@ -1,6 +1,6 @@
 import { TabDetails } from '../messaging/message_systems/get_active_tab_details/types';
 
-interface BaseAction {
+interface Action {
   tabFcn: (tabDetails: TabDetails) => Promise<string | void>;
   filter: (tabDetails: TabDetails) => boolean;
   handleResult: (
@@ -8,15 +8,15 @@ interface BaseAction {
   ) => Promise<{ message: string; isError: boolean } | null>;
 }
 
-export interface AutoAction extends BaseAction {}
+export interface AutoAction extends Action {}
 
-export interface Action extends BaseAction {
+export interface ManualAction extends Action {
   label: string;
   tooltip: string;
   initMessage: string | null;
 }
 
-type AnyActionSet<T> = { [name: string]: T };
+type ActionSet<T> = { [name: string]: T };
 
-export type AutoActionSet = AnyActionSet<AutoAction>;
-export type ActionSet = AnyActionSet<Action>;
+export type AutoActionSet = ActionSet<AutoAction>;
+export type ManualActionSet = ActionSet<ManualAction>;
