@@ -15,17 +15,18 @@
  */
 
 /**
- * Register message systems here
+ * This module should not need to be updated for new request types
  */
 
-import { BaseMessageSystem } from '../framework/base_message_system';
-import { messageSystem as getActiveTabDetailsMessageSystem } from './get_active_tab_details/message_system';
-import { messageSystem as doActionMessageSystem } from './do_action/message_system';
-import { messageSystem as doAutoActionsMessageSystem } from './do_auto_action/message_system';
-
-export const messageSystems: Array<BaseMessageSystem<{}, {}>> = [
-  getActiveTabDetailsMessageSystem,
-  doActionMessageSystem,
-  doAutoActionsMessageSystem,
-  // Add new message systems here
-];
+import { createMessageSystem } from '../../framework/base_message_system';
+import { handleAsyncInTab } from './handle_async_in_tab';
+import { handleAsyncInServiceWorker } from '../noops/handle_async_in_service_worker';
+import { NAME } from './types';
+import {
+  DoAutoActionsRequestData,
+  DoAutoActionsRequestResponseData,
+} from './types';
+export const { messageSystem, createRequest } = createMessageSystem<
+  DoAutoActionsRequestData,
+  DoAutoActionsRequestResponseData
+>(NAME, handleAsyncInTab, handleAsyncInServiceWorker);

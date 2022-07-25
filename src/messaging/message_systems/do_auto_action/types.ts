@@ -14,18 +14,23 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
+import { TabDetails } from '../get_active_tab_details/types';
+
 /**
- * Register message systems here
+ * Update these types for each type of request
  */
 
-import { BaseMessageSystem } from '../framework/base_message_system';
-import { messageSystem as getActiveTabDetailsMessageSystem } from './get_active_tab_details/message_system';
-import { messageSystem as doActionMessageSystem } from './do_action/message_system';
-import { messageSystem as doAutoActionsMessageSystem } from './do_auto_action/message_system';
+/** the name of the type of request (must be unique) */
+export const NAME = 'do auto actions request';
 
-export const messageSystems: Array<BaseMessageSystem<{}, {}>> = [
-  getActiveTabDetailsMessageSystem,
-  doActionMessageSystem,
-  doAutoActionsMessageSystem,
-  // Add new message systems here
-];
+/**
+ * The type of data passed with the request
+ */
+export interface DoAutoActionsRequestData {}
+
+/**
+ * The type of data passed with the response
+ */
+export interface DoAutoActionsRequestResponseData {
+  error?: string;
+}

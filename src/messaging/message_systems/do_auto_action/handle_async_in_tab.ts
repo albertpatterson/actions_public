@@ -19,26 +19,42 @@
  */
 
 import {
-  GetActiveTabDetailsRequestData,
-  GetActiveTabDetailsRequestResponseData,
+  DoAutoActionsRequestData,
+  DoAutoActionsRequestResponseData,
 } from './types';
 import { Request, ResponseResult } from '../../framework/types';
 import { getTabDetails } from '../../../active_tab_details';
+import { getAutoActionSet } from '../../../actions';
 
 export async function handleAsyncInTab(
-  request: Request<GetActiveTabDetailsRequestData>,
+  request: Request<DoAutoActionsRequestData>,
   sender: chrome.runtime.MessageSender
-): Promise<ResponseResult<GetActiveTabDetailsRequestResponseData>> {
-  console.log(
-    `Handled get active Page details Request with data "${request.data}"`
-  );
-
+): Promise<ResponseResult<DoAutoActionsRequestResponseData>> {
   const tabDetails = getTabDetails();
+
+  const autoActionSet = getAutoActionSet(tabDetails);
+
+  let errors: string[] = [];
+
+  for (const autoActionName in autoActionSet) {
+    try {
+      const autoAction = autoActionSet[autoActionName];
+      autoAction.tabFcn(tabDetails);
+    } catch (caught: unknown) {
+      const error = caught as Error;
+      errors.push(error.message);
+    }
+  }
+
+  if (errors.length === 0) {
+    return {
+      succeeded: false,
+      data: { error: errors.join('\n\n') },
+    };
+  }
 
   return {
     succeeded: true,
-    data: {
-      tabDetails,
-    },
+    data: {},
   };
 }

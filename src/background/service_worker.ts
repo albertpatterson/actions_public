@@ -15,6 +15,10 @@
  */
 
 import { handleRequestInServiceWorker } from '../messaging/framework/message';
+import {
+  messageSystem as autoActionsMessageSystem,
+  createRequest as createDoAutoActionsRequest,
+} from '../messaging/message_systems/do_auto_action/message_system';
 
 /**
  * handle requests sent via the message system
@@ -22,3 +26,14 @@ import { handleRequestInServiceWorker } from '../messaging/framework/message';
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return handleRequestInServiceWorker(request, sender, sendResponse);
 });
+
+chrome.tabs.onUpdated.addListener(
+  (tabId: number, changeInfo: { status?: string }, tab: chrome.tabs.Tab) => {
+    if (changeInfo.status === 'complete') {
+      autoActionsMessageSystem.sendInServiceWorker(
+        tabId,
+        createDoAutoActionsRequest({})
+      );
+    }
+  }
+);
