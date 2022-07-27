@@ -94,3 +94,44 @@ export function waitRandThenDo<T>(
     }, wait);
   });
 }
+
+export function setImmediateInterval(
+  fcn: () => void,
+  intervalTime: number,
+  firstCallSynchronous = false
+) {
+  const interval = setInterval(fcn, intervalTime);
+  if (firstCallSynchronous) {
+    fcn();
+  } else {
+    setTimeout(fcn, 0);
+  }
+  return interval;
+}
+
+export function setTimeoutInterval(
+  fcn: () => boolean,
+  intervalTime: number,
+  timeoutTime: number,
+  firstCallSynchronous = false
+): Promise<boolean> {
+  return new Promise((res) => {
+    const intervalFcn = () => {
+      const done = fcn();
+      if (done) {
+        clearTimeout(timeout);
+        clearInterval(interval);
+        res(true);
+      }
+    };
+    const interval = setImmediateInterval(
+      intervalFcn,
+      intervalTime,
+      firstCallSynchronous
+    );
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+      res(false);
+    }, timeoutTime);
+  });
+}
