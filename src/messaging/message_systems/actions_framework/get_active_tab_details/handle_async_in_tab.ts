@@ -18,40 +18,27 @@
  * Update this function to contain the logic run in the tab when this request type is recieved.
  */
 
-import { DoActionRequestData, DoActionRequestResponseData } from './types';
-import { Request, ResponseResult } from '../../framework/types';
-import { getManualActionsForTab } from '../../../actions/framework/access';
+import {
+  GetActiveTabDetailsRequestData,
+  GetActiveTabDetailsRequestResponseData,
+} from './types';
+import { Request, ResponseResult } from '../../../framework/types';
+import { getTabDetails } from '../../../../shared/active_tab_details';
 
 export async function handleAsyncInTab(
-  request: Request<DoActionRequestData>,
+  request: Request<GetActiveTabDetailsRequestData>,
   sender: chrome.runtime.MessageSender
-): Promise<ResponseResult<DoActionRequestResponseData>> {
-  const actionName = request.data.actionName;
-  const tabDetails = request.data.tabDetails;
-
+): Promise<ResponseResult<GetActiveTabDetailsRequestResponseData>> {
   console.log(
-    `Handled do action Request with name "${actionName}" on tab with title "${document.title}"`
+    `Handled get active Page details Request with data "${request.data}"`
   );
 
-  const manualActionSet = getManualActionsForTab(tabDetails);
-  const action = manualActionSet[actionName];
-  if (!action) {
-    return {
-      succeeded: false,
-      data: {
-        error: `no action with name ${actionName}`,
-      },
-    };
-  }
-
-  const result = (await action.tabFcn(tabDetails)) || undefined;
-
-  console.log(`returning successful result in tab with result "${result}"`);
+  const tabDetails = getTabDetails();
 
   return {
     succeeded: true,
     data: {
-      result,
+      tabDetails,
     },
   };
 }

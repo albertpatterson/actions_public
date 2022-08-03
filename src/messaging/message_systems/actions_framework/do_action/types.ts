@@ -14,17 +14,27 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
+import { TabDetails } from '../../../../shared/active_tab_details/types';
+
 /**
- * This module should not need to be updated for new request types
+ * Update these types for each type of request
  */
 
-import { createMessageSystem } from '../../framework/base_message_system';
-import { handleAsyncInTab } from './handle_async_in_tab';
-import { handleAsyncInServiceWorker } from './handle_async_in_service_worker';
-import { NAME } from './types';
+/** the name of the type of request (must be unique) */
+export const NAME = 'do action request';
 
-export const { messageSystem, createRequest } = createMessageSystem(
-  NAME,
-  handleAsyncInTab,
-  handleAsyncInServiceWorker
-);
+/**
+ * The type of data passed with the request
+ */
+export interface DoActionRequestData {
+  actionName: string;
+  tabDetails: TabDetails;
+}
+
+/**
+ * The type of data passed with the response
+ */
+export interface DoActionRequestResponseData {
+  result?: string;
+  error?: string;
+}

@@ -18,7 +18,7 @@ import { handleRequestInServiceWorker } from '../messaging/framework/message';
 import {
   messageSystem as autoActionsMessageSystem,
   createRequest as createDoAutoActionsRequest,
-} from '../messaging/message_systems/do_auto_action/message_system';
+} from '../messaging/message_systems/actions_framework/do_auto_action/message_system';
 
 /**
  * handle requests sent via the message system

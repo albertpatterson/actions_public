@@ -18,15 +18,15 @@
  * This module should not need to be updated for new request types
  */
 
-import { createMessageSystem } from '../../framework/base_message_system';
+import { createAndRegisterMessageSystem } from '../../../framework/create_register';
 import { handleAsyncInTab } from './handle_async_in_tab';
-import { handleAsyncInServiceWorker } from '../noops/handle_async_in_service_worker';
+import { handleAsyncInServiceWorker } from '../../noops/handle_async_in_service_worker';
 import { NAME } from './types';
 import {
   DoAutoActionsRequestData,
   DoAutoActionsRequestResponseData,
 } from './types';
-export const { messageSystem, createRequest } = createMessageSystem<
+export const { messageSystem, createRequest } = createAndRegisterMessageSystem<
   DoAutoActionsRequestData,
   DoAutoActionsRequestResponseData
 >(NAME, handleAsyncInTab, handleAsyncInServiceWorker);

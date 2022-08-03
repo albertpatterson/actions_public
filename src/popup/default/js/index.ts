@@ -19,11 +19,11 @@ import { drawActionsButtons, showMessage, showToast } from './view';
 import {
   messageSystem as getActiveTabDetailsMessageSystem,
   createRequest as createGetActiveTabDetailsRequest,
-} from '../../../messaging/message_systems/get_active_tab_details/message_system';
+} from '../../../messaging/message_systems/actions_framework/get_active_tab_details/message_system';
 import {
   messageSystem as doActionMessageSystem,
   createRequest as createdoActionRequest,
-} from '../../../messaging/message_systems/do_action/message_system';
+} from '../../../messaging/message_systems/actions_framework/do_action/message_system';
 import { getManualActionsForTab } from '../../../actions/framework/access';
 import { TabDetails } from '../../../shared/active_tab_details/types';
 import { ManualActionSet } from '../../../actions/framework/types';

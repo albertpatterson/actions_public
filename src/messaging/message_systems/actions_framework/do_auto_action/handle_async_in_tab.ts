@@ -22,9 +22,9 @@ import {
   DoAutoActionsRequestData,
   DoAutoActionsRequestResponseData,
 } from './types';
-import { Request, ResponseResult } from '../../framework/types';
-import { getTabDetails } from '../../../shared/active_tab_details';
-import { getAutoActionsForTab } from '../../../actions/framework/access';
+import { Request, ResponseResult } from '../../../framework/types';
+import { getTabDetails } from '../../../../shared/active_tab_details';
+import { getAutoActionsForTab } from '../../../../actions/framework/access';
 
 export async function handleAsyncInTab(
   request: Request<DoAutoActionsRequestData>,

@@ -15,30 +15,16 @@
  */
 
 /**
- * Update this function to contain the logic run in the tab when this request type is recieved.
+ * This module should not need to be updated for new request types
  */
 
-import {
-  GetActiveTabDetailsRequestData,
-  GetActiveTabDetailsRequestResponseData,
-} from './types';
-import { Request, ResponseResult } from '../../framework/types';
-import { getTabDetails } from '../../../shared/active_tab_details';
+import { createAndRegisterMessageSystem } from '../../../framework/create_register';
+import { handleAsyncInTab } from './handle_async_in_tab';
+import { handleAsyncInServiceWorker } from './handle_async_in_service_worker';
+import { NAME } from './types';
 
-export async function handleAsyncInTab(
-  request: Request<GetActiveTabDetailsRequestData>,
-  sender: chrome.runtime.MessageSender
-): Promise<ResponseResult<GetActiveTabDetailsRequestResponseData>> {
-  console.log(
-    `Handled get active Page details Request with data "${request.data}"`
-  );
-
-  const tabDetails = getTabDetails();
-
-  return {
-    succeeded: true,
-    data: {
-      tabDetails,
-    },
-  };
-}
+export const { messageSystem, createRequest } = createAndRegisterMessageSystem(
+  NAME,
+  handleAsyncInTab,
+  handleAsyncInServiceWorker
+);

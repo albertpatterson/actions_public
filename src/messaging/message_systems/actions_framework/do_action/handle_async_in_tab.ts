@@ -15,55 +15,43 @@
  */
 
 /**
- * Update this function to contain the logic run in the service worker when this request type is recieved.
+ * Update this function to contain the logic run in the tab when this request type is recieved.
  */
 
-import { messageSystem as doActionMessageSystem } from './message_system';
-import { ResponseResult, Request } from '../../framework/types';
-import { createRequest as createDoActionRequest } from './message_system';
-import { logResponse, stringifyResponse } from '../../util';
 import { DoActionRequestData, DoActionRequestResponseData } from './types';
+import { Request, ResponseResult } from '../../../framework/types';
+import { getManualActionsForTab } from '../../../../actions/framework/access';
 
-export async function handleAsyncInServiceWorker(
+export async function handleAsyncInTab(
   request: Request<DoActionRequestData>,
   sender: chrome.runtime.MessageSender
 ): Promise<ResponseResult<DoActionRequestResponseData>> {
   const actionName = request.data.actionName;
   const tabDetails = request.data.tabDetails;
 
-  console.log(`Handling do action in service worker with name "${actionName}"`);
-
-  const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-  const activeTab = tabs[0];
-
-  if (!activeTab?.id) {
-    return {
-      succeeded: false,
-      data: {
-        error: 'active tab not found',
-      },
-    };
-  }
-
-  console.log(`sending do action in service worker with name "${actionName}"`);
-
-  const doActionRequest = createDoActionRequest({ ...request.data });
-
-  const response = await doActionMessageSystem.sendInServiceWorker(
-    activeTab.id,
-    doActionRequest
+  console.log(
+    `Handled do action Request with name "${actionName}" on tab with title "${document.title}"`
   );
 
-  logResponse(response);
-
-  if (!response) {
+  const manualActionSet = getManualActionsForTab(tabDetails);
+  const action = manualActionSet[actionName];
+  if (!action) {
     return {
       succeeded: false,
       data: {
-        error: 'no response received',
+        error: `no action with name ${actionName}`,
       },
     };
   }
 
-  return response;
+  const result = (await action.tabFcn(tabDetails)) || undefined;
+
+  console.log(`returning successful result in tab with result "${result}"`);
+
+  return {
+    succeeded: true,
+    data: {
+      result,
+    },
+  };
 }

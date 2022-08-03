@@ -19,9 +19,9 @@
  */
 
 import { messageSystem as getActiveTabDetailsMessageSystem } from './message_system';
-import { ResponseResult, Request } from '../../framework/types';
+import { ResponseResult, Request } from '../../../framework/types';
 import { createRequest as createGetActivbeTabDetailsRequest } from './message_system';
-import { logResponse } from '../../util';
+import { logResponse } from '../../../util';
 import {
   GetActiveTabDetailsRequestData,
   GetActiveTabDetailsRequestResponseData,
