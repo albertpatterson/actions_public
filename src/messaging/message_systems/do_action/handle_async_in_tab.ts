@@ -20,7 +20,7 @@
 
 import { DoActionRequestData, DoActionRequestResponseData } from './types';
 import { Request, ResponseResult } from '../../framework/types';
-import { getManualActionSet } from '../../../actions';
+import { getManualActionsForTab } from '../../../actions/framework/access';
 
 export async function handleAsyncInTab(
   request: Request<DoActionRequestData>,
@@ -33,7 +33,7 @@ export async function handleAsyncInTab(
     `Handled do action Request with name "${actionName}" on tab with title "${document.title}"`
   );
 
-  const manualActionSet = getManualActionSet(tabDetails);
+  const manualActionSet = getManualActionsForTab(tabDetails);
   const action = manualActionSet[actionName];
   if (!action) {
     return {

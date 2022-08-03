@@ -1,0 +1,11 @@
+import { context } from './context';
+import { createAndRegisterVideoSetSpeedsActions } from './actions/set_speeds/set_speeds';
+import { createAndRegisterVideoSlowDownAction } from './actions/slow_down/slow_down';
+import { createAndRegisterVideoSpeedUpAction } from './actions/speed_up/speed_up';
+import { createAndRegisterVideoSkipAction } from './actions/skip/skip';
+import './actions/go_back/go_back';
+import './actions/go_forward/go_forward';
+createAndRegisterVideoSkipAction(context);
+createAndRegisterVideoSetSpeedsActions(context);
+createAndRegisterVideoSlowDownAction(context);
+createAndRegisterVideoSpeedUpAction(context);

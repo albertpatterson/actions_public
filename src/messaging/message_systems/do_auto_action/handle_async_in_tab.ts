@@ -23,8 +23,8 @@ import {
   DoAutoActionsRequestResponseData,
 } from './types';
 import { Request, ResponseResult } from '../../framework/types';
-import { getTabDetails } from '../../../active_tab_details';
-import { getAutoActionSet } from '../../../actions';
+import { getTabDetails } from '../../../shared/active_tab_details';
+import { getAutoActionsForTab } from '../../../actions/framework/access';
 
 export async function handleAsyncInTab(
   request: Request<DoAutoActionsRequestData>,
@@ -32,7 +32,7 @@ export async function handleAsyncInTab(
 ): Promise<ResponseResult<DoAutoActionsRequestResponseData>> {
   const tabDetails = getTabDetails();
 
-  const autoActionSet = getAutoActionSet(tabDetails);
+  const autoActionSet = getAutoActionsForTab(tabDetails);
 
   let errors: string[] = [];
 

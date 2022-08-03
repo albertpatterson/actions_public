@@ -23,7 +23,7 @@ import {
   GetActiveTabDetailsRequestResponseData,
 } from './types';
 import { Request, ResponseResult } from '../../framework/types';
-import { getTabDetails } from '../../../active_tab_details';
+import { getTabDetails } from '../../../shared/active_tab_details';
 
 export async function handleAsyncInTab(
   request: Request<GetActiveTabDetailsRequestData>,

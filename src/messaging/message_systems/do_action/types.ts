@@ -14,7 +14,7 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-import { TabDetails } from '../get_active_tab_details/types';
+import { TabDetails } from '../../../shared/active_tab_details/types';
 
 /**
  * Update these types for each type of request

@@ -24,9 +24,9 @@ import {
   messageSystem as doActionMessageSystem,
   createRequest as createdoActionRequest,
 } from '../../../messaging/message_systems/do_action/message_system';
-import { getManualActionSet } from '../../../actions';
-import { TabDetails } from '../../../messaging/message_systems/get_active_tab_details/types';
-import { ManualActionSet } from '../../../actions/types';
+import { getManualActionsForTab } from '../../../actions/framework/access';
+import { TabDetails } from '../../../shared/active_tab_details/types';
+import { ManualActionSet } from '../../../actions/framework/types';
 
 (async () => {
   console.log('loading');
@@ -40,7 +40,7 @@ import { ManualActionSet } from '../../../actions/types';
   if (getActiveTabDetailsResponse) {
     const activeTabDetails = getActiveTabDetailsResponse.data.tabDetails;
     if (activeTabDetails) {
-      const filteredActionSet = getManualActionSet(activeTabDetails);
+      const filteredActionSet = getManualActionsForTab(activeTabDetails);
       const doAction = createActionDoer(activeTabDetails);
 
       const labeledActions = getActionLabels(filteredActionSet);
@@ -54,7 +54,7 @@ import { ManualActionSet } from '../../../actions/types';
 })();
 
 function createActionDoer(tabDetails: TabDetails) {
-  const manualActionSet = getManualActionSet(tabDetails);
+  const manualActionSet = getManualActionsForTab(tabDetails);
   return async (actionName: string) => {
     const request = createdoActionRequest({
       tabDetails,

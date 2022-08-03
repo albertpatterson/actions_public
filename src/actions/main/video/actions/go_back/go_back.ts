@@ -14,21 +14,18 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-/**
- * Update these types for each type of request
- */
+import { decrementTime } from '../../util/utils';
+import { context } from '../../context';
+import { ManualAction } from '../../../../framework/types';
+import { TabDetails } from '../../../../../shared/active_tab_details/types';
+import { createAndRegisterManualAction } from '../../../../framework/creation_registration';
 
-/** the name of the type of request (must be unique) */
-export const NAME = 'do auto actions request';
-
-/**
- * The type of data passed with the request
- */
-export interface DoAutoActionsRequestData {}
-
-/**
- * The type of data passed with the response
- */
-export interface DoAutoActionsRequestResponseData {
-  error?: string;
-}
+export const action: ManualAction = createAndRegisterManualAction({
+  id: 'video-go-back',
+  label: '⬅️',
+  tooltip: 'Go back 10s',
+  tabFcn: async () => {
+    decrementTime(context, 10, undefined, true);
+  },
+  filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
+});
